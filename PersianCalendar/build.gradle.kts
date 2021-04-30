@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.tasks.factory.dependsOn
 import groovy.json.JsonSlurper
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.utils.addToStdlib.firstNotNullResult
@@ -31,7 +32,7 @@ android {
     }
 
     compileSdk = 30
-    buildToolsVersion ="30.0.3"
+    buildToolsVersion = "30.0.3"
 
     buildFeatures {
         viewBinding = true
@@ -52,7 +53,9 @@ android {
         versionName = "6.5.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        resourceConfigurations.addAll(listOf("en", "fa", "ckb", "ar", "ur", "ps", "glk", "azb", "ja"))
+        resourceConfigurations.addAll(
+            listOf("en", "fa", "ckb", "ar", "ur", "ps", "glk", "azb", "ja")
+        )
         setProperty("archivesBaseName", "PersianCalendar-$versionName-$gitVersion")
         multiDexEnabled = false
     }
@@ -194,7 +197,8 @@ val gregorianEvents = listOf(
                 val longitude = (city["longitude"] as Number).toDouble()
                 // Maybe we can enable elevation for better calculations sometime
                 // just that we want be sure it won't regress accuracy
-                val elevation = if (countryCode == "ir") 0.0 else (city["elevation"] as Number).toDouble()
+                val elevation =
+                    if (countryCode == "ir") 0.0 else (city["elevation"] as Number).toDouble()
                 """"$key" to CityItem(
         key = "$key",
         en = "${city["en"]}", fa = "${city["fa"]}",
@@ -218,8 +222,4 @@ val citiesStore = mapOf(
         )
     }
 }
-afterEvaluate {
-//    android.applicationVariants.forEach { variant ->
-//        variant.registerJavaGeneratingTask(generateAppSrcTask.get(), generatedAppSrcDir)
-//    }
-}
+tasks.named("preBuild").dependsOn(generateAppSrcTask)
