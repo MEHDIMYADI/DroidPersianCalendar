@@ -1,7 +1,6 @@
 package com.byagowi.persiancalendar.ui.calendar.calendarpager
 
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.ViewGroup
@@ -100,9 +99,7 @@ class CalendarPager @JvmOverloads constructor(
 
             private val selectableItemBackground = TypedValue().also {
                 context.theme.resolveAttribute(
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                        android.R.attr.selectableItemBackgroundBorderless
-                    else android.R.attr.selectableItemBackground,
+                    android.R.attr.selectableItemBackgroundBorderless,
                     it, true
                 )
             }.resourceId

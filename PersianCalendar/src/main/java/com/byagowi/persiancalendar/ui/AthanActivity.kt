@@ -94,15 +94,10 @@ class AthanActivity : AppCompatActivity() {
                     }
                 }
                 ringtone = RingtoneManager.getRingtone(this, customAthanUri).apply {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        audioAttributes = AudioAttributes.Builder()
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .setUsage(AudioAttributes.USAGE_ALARM)
-                            .build()
-                    } else {
-                        @Suppress("DEPRECATION")
-                        streamType = AudioManager.STREAM_ALARM
-                    }
+                    audioAttributes = AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .build()
                     volumeControlStream = AudioManager.STREAM_ALARM
                     play()
                 }
@@ -110,17 +105,12 @@ class AthanActivity : AppCompatActivity() {
                 mediaPlayer = MediaPlayer().apply {
                     runCatching {
                         setDataSource(this@AthanActivity, getDefaultAthanUri(this@AthanActivity))
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            setAudioAttributes(
-                                AudioAttributes.Builder()
-                                    .setUsage(AudioAttributes.USAGE_ALARM)
-                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                    .build()
-                            )
-                        } else {
-                            @Suppress("DEPRECATION")
-                            setAudioStreamType(AudioManager.STREAM_ALARM)
-                        }
+                        setAudioAttributes(
+                            AudioAttributes.Builder()
+                                .setUsage(AudioAttributes.USAGE_ALARM)
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .build()
+                        )
                         volumeControlStream = AudioManager.STREAM_ALARM
                         prepare()
                     }.onFailure(logException)

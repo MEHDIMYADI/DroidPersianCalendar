@@ -112,9 +112,7 @@ class AboutFragment : Fragment() {
                     chip.text = parts[1]
                     chip.chipIcon = icon
                     chip.setChipIconTintResource(chipsIconTintId)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        chip.elevation = resources.getDimension(R.dimen.chip_elevation)
-                    }
+                    chip.elevation = resources.getDimension(R.dimen.chip_elevation)
                 }
             }
         }.shuffled().forEach(binding.developers::addView)
@@ -173,10 +171,10 @@ class AboutFragment : Fragment() {
             putExtra(
                 Intent.EXTRA_TEXT,
                 """$defaultMessage
-    
-    
-    
-    
+
+
+
+
 ===Device Information===
 Manufacturer: ${Build.MANUFACTURER}
 Model: ${Build.MODEL}

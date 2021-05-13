@@ -78,14 +78,13 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         obtainNavHost() // sake of initializing NavHost
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            window?.also { window ->
-                // https://learnpainless.com/android/material/make-fully-android-transparent-status-bar
-                window.attributes = window.attributes.also {
-                    it.flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS.inv()
-                }
-                window.statusBarColor = Color.TRANSPARENT
+        window?.also { window ->
+            // https://learnpainless.com/android/material/make-fully-android-transparent-status-bar
+            window.attributes = window.attributes.also {
+                it.flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS.inv()
             }
+            window.statusBarColor = Color.TRANSPARENT
+        }
 
         binding.drawer.addDrawerListener(createDrawerListener())
 

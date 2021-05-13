@@ -279,8 +279,7 @@ class CalendarFragment : Fragment() {
                 }
                 true
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                it.appBar.appbarLayout.outlineProvider = null
+            it.appBar.appbarLayout.outlineProvider = null
         }
 
         Jdn.today.toCalendar(mainCalendar).let { today ->

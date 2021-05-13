@@ -90,11 +90,7 @@ class DeviceInformationFragment : Fragment() {
                 it.add("API " + Build.VERSION.SDK_INT)
                 it.getItem(1).setIcon(R.drawable.ic_settings).isEnabled = false
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    it.add(Build.SUPPORTED_ABIS[0])
-                } else {
-                    it.add(Build.CPU_ABI)
-                }
+                it.add(Build.SUPPORTED_ABIS[0])
                 it.getItem(2).setIcon(R.drawable.ic_motorcycle).isEnabled = false
 
                 it.add(Build.MODEL)
@@ -135,9 +131,7 @@ class DeviceInformationFragment : Fragment() {
                                     ).map { (iconId: Int, badgeNumber: Int) ->
                                         tabLayout.addTab(tabLayout.newTab().also { tab ->
                                             tab.setIcon(iconId)
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                tab.icon?.setTint(tintColor)
-                                            }
+                                            tab.icon?.setTint(tintColor)
                                             tab.orCreateBadge.also { badge ->
                                                 badge.isVisible = badgeNumber >= 0
                                                 if (badgeNumber > 0) badge.number = badgeNumber
@@ -173,8 +167,7 @@ class DeviceInformationFragment : Fragment() {
                                 })
                                 linearLayout.addView(ProgressBar(activity).also { progressBar ->
                                     progressBar.isIndeterminate = true
-                                    when {
-                                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> ValueAnimator.ofArgb(
+                                        ValueAnimator.ofArgb(
                                             Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE
                                         ).also { valueAnimator ->
                                             valueAnimator.duration = 3000
@@ -189,7 +182,6 @@ class DeviceInformationFragment : Fragment() {
                                                     )
                                             }
                                         }.start()
-                                    }
                                     progressBar.layoutParams =
                                         ViewGroup.LayoutParams(
                                             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -224,31 +216,29 @@ class DeviceInformationFragment : Fragment() {
 
 // https://stackoverflow.com/a/52557989
 fun <T> T.circularRevealFromMiddle() where T : View?, T : CircularRevealWidget {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        post {
-            val viewWidth = width
-            val viewHeight = height
+    post {
+        val viewWidth = width
+        val viewHeight = height
 
-            val viewDiagonal =
-                sqrt((viewWidth * viewWidth + viewHeight * viewHeight).toDouble()).toInt()
+        val viewDiagonal =
+            sqrt((viewWidth * viewWidth + viewHeight * viewHeight).toDouble()).toInt()
 
-            AnimatorSet().also {
-                it.playTogether(
-                    CircularRevealCompat.createCircularReveal(
-                        this@circularRevealFromMiddle,
-                        (viewWidth / 2).toFloat(), (viewHeight / 2).toFloat(),
-                        10f, (viewDiagonal / 2).toFloat()
-                    ),
-                    ObjectAnimator.ofArgb(
-                        this@circularRevealFromMiddle,
-                        CircularRevealWidget.CircularRevealScrimColorProperty
-                            .CIRCULAR_REVEAL_SCRIM_COLOR,
-                        Color.GRAY, Color.TRANSPARENT
-                    )
+        AnimatorSet().also {
+            it.playTogether(
+                CircularRevealCompat.createCircularReveal(
+                    this@circularRevealFromMiddle,
+                    (viewWidth / 2).toFloat(), (viewHeight / 2).toFloat(),
+                    10f, (viewDiagonal / 2).toFloat()
+                ),
+                ObjectAnimator.ofArgb(
+                    this@circularRevealFromMiddle,
+                    CircularRevealWidget.CircularRevealScrimColorProperty
+                        .CIRCULAR_REVEAL_SCRIM_COLOR,
+                    Color.GRAY, Color.TRANSPARENT
                 )
-                it.duration = 500
-            }.start()
-        }
+            )
+            it.duration = 500
+        }.start()
     }
 }
 
@@ -283,10 +273,8 @@ private fun createCheckerRoundedBoard(
                     it.style = Paint.Style.FILL
                     it.color = color
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    drawRoundRect(0f, 0f, tileSize, tileSize, r, r, fill)
-                    drawRoundRect(tileSize, tileSize, tileSize * 2f, tileSize * 2f, r, r, fill)
-                }
+                drawRoundRect(0f, 0f, tileSize, tileSize, r, r, fill)
+                drawRoundRect(tileSize, tileSize, tileSize * 2f, tileSize * 2f, r, r, fill)
             }
         }, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT
     )
@@ -336,10 +324,7 @@ private class DeviceInformationAdapter(activity: Activity, private val rootView:
         ),
         Item(
             "CPU Instructions Sets",
-            (when {
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> Build.SUPPORTED_ABIS
-                else -> arrayOf(Build.CPU_ABI, Build.CPU_ABI2)
-            }).joinToString(", "),
+            (Build.SUPPORTED_ABIS).joinToString(", "),
             ""
         ),
         Item("Available Processors", Runtime.getRuntime().availableProcessors().toString(), ""),
